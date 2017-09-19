@@ -6,17 +6,16 @@ import android.widget.ListView;
 import android.widget.Toast;
 import com.stassh.examples.starwars.R;
 import com.stassh.examples.starwars.StarwarsApplication;
-import com.stassh.examples.starwars.model.Persons;
 import com.stassh.examples.starwars.network.StarwarsService;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 import javax.inject.Inject;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity {
 
   ListView listView;
-  Call<Persons> personsCall;
+  CompositeDisposable disposables = new CompositeDisposable();
 
   @Inject
   PersonsAdapter adapter;
@@ -40,27 +39,19 @@ public class HomeActivity extends AppCompatActivity {
 
     listView.setAdapter(adapter);
 
-    personsCall = starwarsService.getPersons();
-
-    personsCall.enqueue(new Callback<Persons>() {
-      @Override
-      public void onResponse(Call<Persons> call, Response<Persons> response) {
-        adapter.swapData(response.body().getPersons());
-      }
-
-      @Override
-      public void onFailure(Call<Persons> call, Throwable t) {
-        Toast.makeText(HomeActivity.this, "Error getting persons " + t.getMessage(), Toast.LENGTH_LONG).show();
-      }
-    });
-
+    disposables.add(starwarsService.getPersons().subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(
+            next->adapter.swapData(next.getPersons()),
+            error -> Toast.makeText(HomeActivity.this, "Error getting list " + error.getMessage(), Toast.LENGTH_LONG).show()
+        ));
   }
 
   @Override
   protected void onDestroy() {
     super.onDestroy();
-    if (personsCall == null)
+    if (disposables == null)
       return;
-    personsCall.cancel();
+    disposables.dispose();
   }
 }

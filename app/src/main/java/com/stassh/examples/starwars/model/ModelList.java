@@ -12,7 +12,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class Persons {
+public class ModelList<T> {
 
   @SerializedName("count")
   @Expose
@@ -26,7 +26,7 @@ public class Persons {
 
   @SerializedName("results")
   @Expose
-  private List<Person> persons = null;
+  private List<T> persons = null;
 
   public Integer getCount() {
     return count;
@@ -52,11 +52,11 @@ public class Persons {
     this.previous = previous;
   }
 
-  public List<Person> getPersons() {
+  public List<T> getPersons() {
     return persons;
   }
 
-  public void setPersons(List<Person> persons) {
+  public void setPersons(List<T> persons) {
     this.persons = persons;
   }
 }

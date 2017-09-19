@@ -1,6 +1,8 @@
 package com.stassh.examples.starwars.network;
 
-import com.stassh.examples.starwars.model.Persons;
+import com.stassh.examples.starwars.model.ModelList;
+import com.stassh.examples.starwars.model.Person;
+import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.GET;
 
@@ -14,5 +16,5 @@ import retrofit2.http.GET;
 public interface StarwarsService {
 
   @GET("people/")
-  Call<Persons> getPersons();
+  Observable<ModelList<Person>> getPersons();
 }
