@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import com.squareup.picasso.Picasso;
 import com.stassh.examples.starwars.model.Person;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,12 +21,10 @@ public class PersonsAdapter extends BaseAdapter {
 
   private final List<Person> personsList = new ArrayList<>(0);
   private final Context context;
-  //private final Picasso picasso;
 
   @Inject
   public PersonsAdapter(HomeActivity context) {
     this.context = context;
-    //this.picasso = picasso;
   }
 
   @Override
@@ -60,8 +57,9 @@ public class PersonsAdapter extends BaseAdapter {
   }
 
   public void swapData(Collection<Person> persons) {
-    personsList.clear();
-    if (persons != null) {
+    if (persons == null) {
+      personsList.clear();
+    } else {
       personsList.addAll(persons);
     }
     notifyDataSetChanged();

@@ -5,6 +5,7 @@ import com.stassh.examples.starwars.model.Person;
 import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Url;
 
 /**
  * Created by Stanislav Shabalin on 18/09/2017
@@ -17,4 +18,8 @@ public interface StarwarsService {
 
   @GET("people/")
   Observable<ModelList<Person>> getPersons();
+
+  @GET
+  Observable<ModelList<Person>> get(@Url String url);
+
 }
