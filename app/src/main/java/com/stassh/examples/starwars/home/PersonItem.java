@@ -2,6 +2,7 @@ package com.stassh.examples.starwars.home;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import com.squareup.picasso.Picasso;
@@ -16,7 +17,7 @@ import com.stassh.examples.starwars.model.Person;
  */
 
 
-public class PersonItem extends FrameLayout {
+public class PersonItem extends CardView {
   TextView name;
 
   public void set(Person person) {

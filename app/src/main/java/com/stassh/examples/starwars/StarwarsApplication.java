@@ -6,7 +6,6 @@ import com.stassh.examples.starwars.home.ContextModule;
 import com.stassh.examples.starwars.home.DaggerStarwarsApplicationComponent;
 import com.stassh.examples.starwars.home.StarwarsApplicationComponent;
 import timber.log.Timber;
-import timber.log.Timber.DebugTree;
 
 
 /**
